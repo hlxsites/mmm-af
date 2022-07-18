@@ -1,29 +1,34 @@
 /*
 Displays the 'clicked' tab and hides all other tabs
 */
-function openTab(evt) {
-  evt.preventDefault();
-  const tabId = Number(evt.target.dataset.tabId);
-  const tabcontents = document.getElementsByClassName('tab-content');
-  for (let i = 0; i < tabcontents.length; i += 1) {
-    if (i === tabId) {
-      tabcontents[i].style.display = 'block';
-    } else {
-      tabcontents[i].style.display = 'none';
-    }
+function openTab(e) {
+  e.preventDefault();
+  const { target } = e;
+  const parent = target.closest('.tabs');
+  const selected = target.getAttribute('aria-selected') === 'true';
+  if (!selected) {
+    // close all open tabs
+    const openTitles = parent.querySelectorAll('[aria-selected="true"]');
+    const openContent = parent.querySelectorAll('[aria-hidden="false"]');
+    openTitles.forEach((tab) => tab.setAttribute('aria-selected', false));
+    openContent.forEach((tab) => tab.setAttribute('aria-hidden', true));
+    // open clicked tab
+    target.setAttribute('aria-selected', true);
+    const content = parent.querySelector(`[aria-labelledby="${target.id}"]`);
+    content.setAttribute('aria-hidden', false);
   }
 }
 
-export default function decorate(block) {
-  const tabLinks = [];
+export default function decorate(tabsBlock) {
   const tabLinksDiv = document.createElement('div');
-  tabLinksDiv.classList.add('tab-links');
+  const tabLinksOL = document.createElement('ol');
+  tabLinksDiv.appendChild(tabLinksOL);
+  tabLinksDiv.classList.add('tabs-links');
 
   const tabContentsDiv = document.createElement('div');
-  tabContentsDiv.classList.add('tab-contents');
+  tabContentsDiv.classList.add('tabs-contents');
 
-  let idx = 0;
-  block.querySelectorAll(':scope>div').forEach((row) => {
+  tabsBlock.querySelectorAll(':scope>div').forEach((row) => {
     const rowLinkDiv = row.querySelectorAll(':scope>div')[0];
     const rowContentDiv = row.querySelectorAll(':scope>div')[1];
     const rowLinkTxt = rowLinkDiv.textContent;
@@ -31,25 +36,25 @@ export default function decorate(block) {
     const rowLink = document.createElement('a');
     rowLink.setAttribute('href', '_');
     rowLink.textContent = rowLinkTxt;
-    rowLink.setAttribute('data-tab-id', idx);
-    idx += 1;
+    rowLink.setAttribute('id', rowLinkTxt);
+    rowLink.setAttribute('aria-selected', false);
     rowLink.addEventListener('click', openTab);
 
-    const tabLinkDiv = document.createElement('div');
-    tabLinkDiv.appendChild(rowLink);
-    tabLinksDiv.appendChild(tabLinkDiv);
+    const tabLinkLI = document.createElement('li');
+    tabLinkLI.appendChild(rowLink);
+    tabLinksOL.appendChild(tabLinkLI);
 
-    tabLinks.push(row);
-
-    rowContentDiv.style.display = 'none';
-    rowContentDiv.classList.add('tab-content');
+    rowContentDiv.setAttribute('aria-hidden', true);
+    rowContentDiv.setAttribute('aria-labelledby', rowLinkTxt);
+    rowContentDiv.classList.add('tabs-content');
     tabContentsDiv.appendChild(rowContentDiv);
   });
 
   // Display the first tab by default
-  tabContentsDiv.firstChild.style.display = 'block';
+  tabContentsDiv.firstChild.setAttribute('aria-hidden', false);
+  tabLinksOL.querySelector('a').setAttribute('aria-selected', true);
 
-  block.innerHTML = '';
-  block.appendChild(tabLinksDiv);
-  block.appendChild(tabContentsDiv);
+  tabsBlock.innerHTML = '';
+  tabsBlock.appendChild(tabLinksDiv);
+  tabsBlock.appendChild(tabContentsDiv);
 }

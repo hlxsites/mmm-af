@@ -1,27 +1,34 @@
-.tab-content img {
+main .tabs .tabs-content[aria-hidden=true] {
+    display: none;
+    visibility: hidden;
+}
+
+main .tabs-content img {
     border-radius: 50%;
 }
 
-.tabs.block {
+main .tabs {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.tab-links div {
+main .tabs-links li {
     padding: 5px;
+    color: var(--link-color);
+    text-decoration: none;
 }
 
 @media (min-width: 900px) {
-    .tabs.block {
+    main .tabs {
         flex-direction: row;
     }
 
-    .tab-content img {
+    main .tabs-content img {
         float: right;
     }
 
-    .tab-links {
+    main .tabs-links {
         min-width: 35%;
     }
 }
