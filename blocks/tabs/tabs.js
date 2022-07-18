@@ -1,7 +1,9 @@
+/*
+Displays the 'clicked' tab and hides all other tabs
+*/
 function openTab(evt) {
   evt.preventDefault();
   const tabId = Number(evt.target.dataset.tabId);
-  // Get all elements with class="tabcontent" and hide them
   const tabcontents = document.getElementsByClassName('tab-content');
   for (let i = 0; i < tabcontents.length; i += 1) {
     if (i === tabId) {
@@ -10,7 +12,6 @@ function openTab(evt) {
       tabcontents[i].style.display = 'none';
     }
   }
-  return false;
 }
 
 export default function decorate(block) {
@@ -44,9 +45,11 @@ export default function decorate(block) {
     rowContentDiv.classList.add('tab-content');
     tabContentsDiv.appendChild(rowContentDiv);
   });
+
+  // Display the first tab by default
   tabContentsDiv.firstChild.style.display = 'block';
+
   block.innerHTML = '';
   block.appendChild(tabLinksDiv);
   block.appendChild(tabContentsDiv);
-  return block;
 }

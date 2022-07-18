@@ -1,25 +1,27 @@
 .tab-content img {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .tabs.block {
-  display: flex;
-  justify-content: space-between;
-}
-
-@media (min-width: 901px) {
-  .tab-content img {
-    float: right;
-  }
-
-  .tab-links {
-    min-width: 35%;
-  }
-}
-
-@media (max-width: 900px) {
-  .tabs.block {
     display: flex;
     flex-direction: column;
-  }
+    justify-content: space-between;
+}
+
+.tab-links div {
+    padding: 5px;
+}
+
+@media (min-width: 900px) {
+    .tabs.block {
+        flex-direction: row;
+    }
+
+    .tab-content img {
+        float: right;
+    }
+
+    .tab-links {
+        min-width: 35%;
+    }
 }
