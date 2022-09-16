@@ -131,7 +131,7 @@ function decorateBlockEmbed($block, url) {
 export default function decorate(block) {
   const link = block.querySelector('a').href;
   block.textContent = '';
-  if (!block.classList.contains('in-modal')) {
+  if (block.closest('body')) {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((e) => e.isIntersecting)) {
         observer.disconnect();
