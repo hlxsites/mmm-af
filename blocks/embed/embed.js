@@ -133,6 +133,7 @@ export default function decorate(block) {
   block.textContent = '';
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
+      observer.disconnect();
       decorateBlockEmbed(block, new URL(link));
     }
   });
