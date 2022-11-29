@@ -14,11 +14,6 @@ export default function decorate(block) {
         div.className = 'cards-card-icon';
       } else {
         div.className = 'cards-card-body';
-        // TODO - if replacing h4 by h3 is ok change it directly in the content and remove following code
-        const h4Title = div.querySelector('h4');
-        const h3Title = document.createElement('h3');
-        h3Title.innerHTML = h4Title.innerHTML;
-        h4Title.replaceWith(h3Title);
       }
     });
     setTimeout(() => {
