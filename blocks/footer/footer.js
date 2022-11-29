@@ -5,7 +5,7 @@ import { readBlockConfig } from '../../scripts/scripts.js';
  * - sets a default aria-label attribute when it has no discernible name
  * @param {Element} footer The footer element
  */
- function handleLinks(footer) {
+function handleLinks(footer) {
   footer.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
     if (href && a.textContent.trim() === '' && !a.hasAttribute('aria-label')) {
@@ -14,7 +14,6 @@ import { readBlockConfig } from '../../scripts/scripts.js';
     }
   });
 }
-
 
 /**
  * Loads and decorates the footer

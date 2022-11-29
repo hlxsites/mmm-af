@@ -678,7 +678,7 @@ export function decorateMain(main) {
 /**
  * Sets the html lang attribute
  */
- function setLang() {
+function setLang() {
   document.documentElement.setAttribute('lang', 'en');
 }
 
