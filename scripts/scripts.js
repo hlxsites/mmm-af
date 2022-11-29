@@ -676,6 +676,13 @@ export function decorateMain(main) {
 }
 
 /**
+ * Sets the html lang attribute
+ */
+ function setLang() {
+  document.documentElement.setAttribute('lang', 'en');
+}
+
+/**
  * Loads a fragment.
  * @param {string} path The path of the fragment
  * @returns {HTMLElement} The root element of the fragment
@@ -722,6 +729,7 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/icons/favicon.png`);
+  setLang();
 }
 
 /**
